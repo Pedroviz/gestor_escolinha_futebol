@@ -18,6 +18,15 @@ const Aluno = mongoose.model("Aluno", {
   nome: String,
   idade: Number,
   posicao: String,
+  escolaAluno: String, // Adicionado campo escolaAluno
+  enderecoAluno: String, // Adicionado campo enderecoAluno
+});
+
+// Definir modelo de escola
+const Escola = mongoose.model("Escola", {
+  nome: String,
+  endereco: String,
+  telefone: String,
 });
 
 // Rota para cadastrar aluno
@@ -31,6 +40,19 @@ app.post("/alunos", async (req, res) => {
 app.get("/alunos", async (req, res) => {
   const alunos = await Aluno.find();
   res.send(alunos);
+});
+
+// Rota para cadastrar escola
+app.post("/escola", async (req, res) => {
+  const escola = new Escola(req.body);
+  await escola.save();
+  res.send(escola);
+});
+
+// Rota para listar escola
+app.get("/escola", async (req, res) => {
+  const escolas = await Escola.find();
+  res.send(escolas);
 });
 
 app.listen(5000, () => console.log("Servidor rodando na porta 5000"));
